@@ -98,7 +98,7 @@ func TestTokenize(t *testing.T) {
 	require := require.New(t)
 	text := "Who's on first?"
 	out := Tokenize(text)
-	expected := []string{"who", "s", "on", "first"}
+	expected := []string{"who", "on", "first"}
 	require.Equal(expected, out)
 
 	/*

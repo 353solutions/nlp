@@ -2,7 +2,7 @@ all:
 	$(error please pick a target)
 
 test:
-	go test -v
+	go test -v ./...
 
 
 bench:
