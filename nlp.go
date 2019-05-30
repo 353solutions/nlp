@@ -9,6 +9,7 @@ var (
 	wordRe = regexp.MustCompile("[[:alpha:]]+")
 )
 
+// Tokenize returns a list of tokens in text (lower case)
 func Tokenize(text string) []string {
 	words := wordRe.FindAllString(text, -1)
 	var tokens []string
