@@ -5,9 +5,22 @@ import (
 	"os"
 	//	"reflect"
 	"testing"
+	"testing/quick"
 
 	"github.com/stretchr/testify/require"
 )
+
+func TestTokenizerQuick(t *testing.T) {
+	fn := func(text string) bool {
+		tokens := Tokenize(text)
+		// Sanity check
+		numTokens := len(wordRe.FindAllString(text, -1))
+		return numTokens == len(tokens)
+	}
+
+	err := quick.Check(fn, nil)
+	require.NoError(t, err, "quick")
+}
 
 /* Place the test cases in tokenizer_cases.json
 [
@@ -23,12 +36,24 @@ type TestCase struct {
 	Expected []string `json:"output"`
 }
 
+/* Why we have require.InDelta
+func TestFloat(t *testing.T) {
+	a, b := 1.1, 1.1
+	out := a * b
+	expected := 1.21
+	//require.Equal(t, expected, out, "float")
+	require.InDelta(t, expected, out, 0.00001, "float")
+
+}
+*/
+
 func loadCases(t *testing.T) []TestCase {
 	require := require.New(t)
 	var testCases []TestCase
 
-	file, err := os.Open("tokenizer_cases.json")
-	require.NoError(err, "open test cases")
+	casesFile := "tokenizer_cases.json"
+	file, err := os.Open(casesFile)
+	require.NoErrorf(err, "open test cases - %#v", casesFile)
 	/*
 		if err != nil {
 			t.Fatalf("can't open test cases - %s", err)
@@ -83,4 +108,21 @@ func TestTokenize(t *testing.T) {
 			t.Fatalf("%#v != %#v", expected, out)
 		}
 	*/
+}
+
+// Typical text length
+var tokBenchText = `
+Software engineering is what happens to programming when you add
+time and other programmers.
+	- Russ Cox
+`
+
+func BenchmarkTokenize(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		toks := Tokenize(tokBenchText)
+		// Using toks so compiler won't optimize them away
+		if len(toks) != 16 {
+			b.Fatal(len(toks))
+		}
+	}
 }
