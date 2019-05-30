@@ -54,6 +54,8 @@ func main() {
 		log.Fatal(err)
 	}
 
+	expvar.NewInt("port").Set(int64(cfg.Port))
+
 	http.HandleFunc("/healthz", healthHandler)
 	http.HandleFunc("/tokenize", tokenizeHandler)
 	addr := fmt.Sprintf(":%d", cfg.Port)
