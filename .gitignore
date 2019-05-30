@@ -1,3 +1,4 @@
-*.test
+nlp.test
+debug.test
 ./nlpd
 cpu.pprof

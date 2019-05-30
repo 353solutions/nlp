@@ -1,0 +1,5 @@
+FROM golang:1.12.4
+WORKDIR /nlp
+COPY . .
+ENV CI="yes"
+RUN go test -v ./...

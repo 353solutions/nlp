@@ -18,3 +18,6 @@ docker:
 	    --build-arg $(shell git rev-parse --short HEAD) \
 	    -f ./cmd/nlpd/Dockerfile \
 	    -t 353solutions/nlpd .
+
+circleci:
+	docker build -f Dockerfile.test
