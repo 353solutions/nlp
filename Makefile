@@ -12,3 +12,9 @@ bench:
 clean:
 	rm -f *.test
 	rm -f cpu.pprof
+
+docker:
+	docker build \
+	    --build-arg $(shell git rev-parse --short HEAD) \
+	    -f ./cmd/nlpd/Dockerfile \
+	    -t 353solutions/nlpd .

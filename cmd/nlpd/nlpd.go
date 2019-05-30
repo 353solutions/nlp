@@ -37,6 +37,8 @@ func parseConfig() (*Config, error) {
 
 var (
 	numTokenize = expvar.NewInt("num_tokenize")
+	// Version is the software version
+	Version = "0.1.0"
 )
 
 func main() {
@@ -55,6 +57,7 @@ func main() {
 	}
 
 	expvar.NewInt("port").Set(int64(cfg.Port))
+	expvar.NewString("version").Set(Version)
 
 	http.HandleFunc("/healthz", healthHandler)
 	http.HandleFunc("/tokenize", tokenizeHandler)
