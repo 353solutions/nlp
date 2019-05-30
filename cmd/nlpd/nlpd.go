@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"expvar"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -28,8 +29,15 @@ func parseConfig() (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+	// TODO: Validate configuration
 	return cfg, nil
 }
+
+// Add a "port" metric on which port the server is listening on
+
+var (
+	numTokenize = expvar.NewInt("num_tokenize")
+)
 
 func main() {
 	flag.Usage = func() {
@@ -57,6 +65,7 @@ func main() {
 }
 
 func tokenizeHandler(w http.ResponseWriter, r *http.Request) {
+	numTokenize.Add(1)
 	defer r.Body.Close()
 	data, err := ioutil.ReadAll(r.Body)
 	if err != nil {
