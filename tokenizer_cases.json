@@ -2,5 +2,5 @@
     {"text": "hi", "output": ["hi"]},
     {"text": "HI", "output": ["hi"]},
     {"text": "What's on second?", "output": ["what", "s", "on", "second"]},
-    {"text": "", "output": null}
+    {"text": "", "output": []}
 ]
