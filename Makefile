@@ -20,4 +20,4 @@ docker:
 	    -t 353solutions/nlpd .
 
 circleci:
-	docker build -f Dockerfile.test
+	docker build -f Dockerfile.test .
