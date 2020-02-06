@@ -3,7 +3,7 @@
 #   docker run -p8080:8080 tdg/nlp
 
 
-FROM golang:1.12.4-stretch as build
+FROM golang:1.13-buster as build
 
 WORKDIR /nlp
 COPY . .
@@ -12,7 +12,7 @@ ARG VERSION=unknown
 # -ldflags="-X ..." injects version to the executable
 RUN go build -ldflags="-X main.Version=${VERSION}" ./cmd/nlpd
 
-FROM debian:stretch-slim
+FROM debian:buster-slim
 COPY --from=build /nlp/nlpd /usr/local/bin
 
 ENV NLP_PORT 8080
