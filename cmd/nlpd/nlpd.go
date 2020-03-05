@@ -87,7 +87,9 @@ func tokenizeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write(out)
+	if _, err := w.Write(out); err != nil {
+		log.Printf("error writing - %s", err)
+	}
 }
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
