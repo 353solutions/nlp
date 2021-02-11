@@ -1,8 +1,13 @@
 package nlp
 
+//go:generate sh -c "go run gen_stop.go < stop_words.txt > stop_words.go"
+//go:generate gofmt -w stop_words.go
+
 import (
 	"regexp"
 	"strings"
+
+	"github.com/353solutions/nlp/stemmer"
 )
 
 var (
@@ -15,9 +20,11 @@ func Tokenize(text string) []string {
 	words := wordRe.FindAllString(text, -1)
 	var tokens []string
 	for _, w := range words {
-		// TODO: stem
 		token := strings.ToLower(w)
-		tokens = append(tokens, token)
+		token = stemmer.Stem(token)
+		if len(token) > 0 && !StopWords[token] {
+			tokens = append(tokens, token)
+		}
 	}
 	return tokens
 }

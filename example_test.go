@@ -12,5 +12,5 @@ func ExampleTokenize() {
 	fmt.Println(tokens)
 
 	// Output:
-	// [hi how are you feeling today]
+	// [hi feel today]
 }

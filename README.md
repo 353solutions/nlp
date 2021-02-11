@@ -1,5 +1,12 @@
 # nlp Project
 
-Used for teaching "The Daily Go"
+Provide NLP utilities for Go
 
 Contact: miki@353solutions.com
+
+
+## Hacking
+
+### Running the Tests
+
+    make test
